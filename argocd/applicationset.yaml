@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: ocr-services-appset
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - name: ocr-model-server
+            chartPath: charts/ocr-model-server
+          - name: ocr-api-gateway
+            chartPath: charts/api-gateway
+  template:
+    metadata:
+      name: '{{name}}'
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
+    spec:
+      project: ocr-project
+      source:
+        repoURL: 'https://github.com/azmeth23/devops-assignment.git'
+        targetRevision: HEAD
+        path: '{{chartPath}}'
+        helm:
+          valueFiles:
+            - values.yaml
+      destination:
+        server: 'https://kubernetes.default.svc'
+        namespace: ocr-app
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
