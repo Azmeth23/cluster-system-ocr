@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.responses import JSONResponse
 import requests
@@ -6,8 +7,8 @@ import json
 
 app = FastAPI()
 
-KSERVE_URL = "http://ocr-model-container:8080/v2/models/ocr-model/infer" # Your KServe model server URL
-#KSERVE_URL = "http://localhost:8080/v2/models/ocr-model/infer"          #temporary local host
+KSERVE_URL = os.getenv("MODEL_SERVER_URL", "http://ocr-model-container:8080/v2/models/ocr-model/infer") 
+#Allows to communicate with modelserver url if available or fallback to this for the local docker
 
 @app.post("/gateway/ocr")
 async def gateway_ocr_request(image_file: UploadFile = File(...)):
