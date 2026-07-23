@@ -1,0 +1,4 @@
+image:
+  repository: azmeth07/ocr-p-repo
+  tag: ocr-model
+pullSecretName: dockerhub-secret

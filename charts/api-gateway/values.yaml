@@ -1,0 +1,7 @@
+image:
+  repository: azmeth07/ocr-p-repo
+  tag: api-gateway
+pullSecretName: dockerhub-secret
+
+config:
+  modelServerUrl: "http://ocr-model-service:8080/v2/models/ocr-model/infer"

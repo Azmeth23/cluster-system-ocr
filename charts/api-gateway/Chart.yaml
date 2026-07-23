@@ -1,0 +1,4 @@
+apiVersion: v2
+name: api-gateway
+description: Helm chart for fastapi
+version: 0.1.0

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap 
+metadata:
+  name: {{ .Release.Name }}-config
+data:
+  MODEL_SERVER_URL: {{ .Values.config.modelServerUrl | quote}}
+

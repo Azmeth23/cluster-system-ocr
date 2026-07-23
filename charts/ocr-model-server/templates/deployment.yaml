@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ocr-model
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ocr-model
+  template:
+    metadata:
+      labels:
+        app: ocr-model
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: ocr-model-sa
+      imagePullSecrets:
+        - name: {{ .Values.pullSecretName }}
+      containers:
+        - name: model
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - name: http 
+              containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: ocr-model-config

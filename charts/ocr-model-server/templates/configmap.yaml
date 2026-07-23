@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ocr-model-config
+data:
+  ENVIRONMENT: "development"
+  ENGINE: "tesseract"

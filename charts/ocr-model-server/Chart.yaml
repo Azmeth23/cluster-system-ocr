@@ -1,0 +1,4 @@
+apiVersion: v2
+name: ocr-model
+description: A Helm chart for the KServe OCR Model
+version: 0.1.0

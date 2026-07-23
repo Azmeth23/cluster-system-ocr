@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: ocr-model-monitor
+  namespace: ocr-app
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: ocr-model
+  podMetricsEndpoints:
+    - port: http
+      path: /metrics
+      interval: 5s  
