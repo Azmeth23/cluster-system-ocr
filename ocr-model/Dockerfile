@@ -1,5 +1,6 @@
 FROM python:3.11-slim
 
+# irradicate the disruptions/unnessary builds during the installation
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     POETRY_VERSION=1.8.2 \
@@ -7,13 +8,12 @@ ENV PYTHONUNBUFFERED=1 \
     POETRY_NO_INTERACTION=1 \
     POETRY_VIRTUALENVS_CREATE=false
 
+#
 ENV PATH="$POETRY_HOME/bin:$PATH"
 
-# Installs system dependencies, tesseract engine, english language packs, and poetry
+# installs curl,tesseract and poetry
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
-    gcc \
-    python3-dev \
     tesseract-ocr \
     tesseract-ocr-eng \
     && curl -sSL https://install.python-poetry.org | python3 - \
@@ -26,6 +26,6 @@ RUN poetry install --no-root --only main
 
 COPY model.py ./
 
-# listens to the port 8080
 EXPOSE 8080
+
 CMD ["python", "model.py"]
